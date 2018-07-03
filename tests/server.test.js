@@ -12,7 +12,7 @@ beforeEach(populateTodos);
 
 describe('POST /todos', () => {
     it('should create a new todo', (done) => {
-        var text = 'Test todo text';
+        const text = 'Test todo text';
 
         request(app)
             .post('/todos')
@@ -108,7 +108,7 @@ describe('GET /todos/:id', () => {
 
 describe('DELETE /todos/:id', () => {
     it('should remove a todo', (done) => {
-        var hexId = todos[1]._id.toHexString();
+        const hexId = todos[1]._id.toHexString();
 
         request(app)
             .delete(`/todos/${hexId}`)
@@ -130,7 +130,7 @@ describe('DELETE /todos/:id', () => {
     });
 
     it('should not remove a todo created by another user', (done) => {
-        var hexId = todos[0]._id.toHexString();
+        const hexId = todos[0]._id.toHexString();
 
         request(app)
             .delete(`/todos/${hexId}`)
@@ -168,8 +168,8 @@ describe('DELETE /todos/:id', () => {
 
 describe('PATCH /todos/:id', () => {
     it('should update a todo', (done) => {
-        var hexId = todos[0]._id.toHexString();
-        var text = 'Updated text';
+        const hexId = todos[0]._id.toHexString();
+        const text = 'Updated text';
 
         request(app)
             .patch(`/todos/${hexId}`)
@@ -188,8 +188,8 @@ describe('PATCH /todos/:id', () => {
     });
 
     it('should not update a todo created by another user', (done) => {
-        var hexId = todos[0]._id.toHexString();
-        var text = 'Updated text';
+        const hexId = todos[0]._id.toHexString();
+        const text = 'Updated text';
 
         request(app)
             .patch(`/todos/${hexId}`)
@@ -203,8 +203,8 @@ describe('PATCH /todos/:id', () => {
     });
 
     it('should clear completedAt when todo is not completed', (done) => {
-        var hexId = todos[1]._id.toHexString();
-        var text = 'Updated text !!!';
+        const hexId = todos[1]._id.toHexString();
+        const text = 'Updated text !!!';
 
         request(app)
             .patch(`/todos/${hexId}`)
@@ -266,8 +266,8 @@ describe('GET /users/me', () => {
 
 describe('POST /users', () => {
     it('should create a user', (done) => {
-        let email = 'email@example.com';
-        let password = '123mnb';
+        const email = 'email@example.com';
+        const password = '123mnb';
         request(app)
             .post('/users')
             .send({ email, password })

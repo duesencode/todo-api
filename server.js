@@ -6,18 +6,18 @@ const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 const bcrypt = require('bcryptjs');
 
-var { mongoose } = require('./db/mongoose');
-var { Todo } = require('./models/todo');
-var { User } = require('./models/user');
-var { authenticate } = require('./middleware/authenticate');
+const { mongoose } = require('./db/mongoose');
+const { Todo } = require('./models/todo');
+const { User } = require('./models/user');
+const { authenticate } = require('./middleware/authenticate');
 
-var app = express()
+const app = express()
 const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
 app.post('/todos', authenticate, (req, res) => {
-    var todo = new Todo({
+    const todo = new Todo({
         text: req.body.text,
         _creator: req.user._id
     });
@@ -40,7 +40,7 @@ app.get('/todos', authenticate, (req, res) => {
 });
 
 app.get('/todos/:id', authenticate, (req, res) => {
-    var id = req.params.id;
+    const id = req.params.id;
 
     if (!ObjectID.isValid(id)) {
         return res.status(404).send();
@@ -61,7 +61,7 @@ app.get('/todos/:id', authenticate, (req, res) => {
 });
 
 app.delete('/todos/:id', authenticate, (req, res) => {
-    var id = req.params.id;
+    const id = req.params.id;
     if (!ObjectID.isValid(id)) {
         return res.status(404).send();
     }
@@ -81,8 +81,8 @@ app.delete('/todos/:id', authenticate, (req, res) => {
 });
 
 app.patch('/todos/:id', authenticate, (req, res) => {
-    var id = req.params.id;
-    var body = _.pick(req.body, ['text', 'completed'])
+    const id = req.params.id;
+    const body = _.pick(req.body, ['text', 'completed'])
 
     if (!ObjectID.isValid(id)) {
         return res.status(404).send();
@@ -110,8 +110,8 @@ app.patch('/todos/:id', authenticate, (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-    var body = _.pick(req.body, ['email', 'password']);
-    var user = new User(body)
+    const body = _.pick(req.body, ['email', 'password']);
+    const user = new User(body)
 
     user.save().then(() => {
         return user.generateAuthToken();
@@ -127,7 +127,7 @@ app.get('/users/me', authenticate, (req, res) => {
 });
 
 app.post('/users/login', (req, res) => {
-    let body = _.pick(req.body, ['email', 'password']);
+    const body = _.pick(req.body, ['email', 'password']);
 
     User.findByCredentials(body.email, body.password).then((user) => {
         return user.generateAuthToken().then((token) => {
